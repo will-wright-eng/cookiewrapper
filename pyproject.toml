@@ -7,7 +7,7 @@ name = "cookiewrapper"
 dynamic = ["version"]
 description = ''
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 license = "MIT"
 keywords = []
 authors = [
@@ -16,7 +16,6 @@ authors = [
 classifiers = [
   "Development Status :: 4 - Beta",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.7",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
@@ -24,18 +23,24 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = []
+dependencies = [
+    "typer >= 0.7.0, < 1.0.0",
+    "click >= 7.1.1, < 9.0.0",
+    "rich >= 10.11.0, < 13.0.0",
+    "distro >= 1.8.0, < 2.0.0",
+    "cookiecutter",
+]
 
 [project.scripts]
 cgen = "cgen:cli"
 
 [project.urls]
-Documentation = "https://github.com/unknown/cookiewrapper#readme"
-Issues = "https://github.com/unknown/cookiewrapper/issues"
-Source = "https://github.com/unknown/cookiewrapper"
+Documentation = "https://github.com/will-wright-eng/cookiewrapper#readme"
+Issues = "https://github.com/will-wright-eng/cookiewrapper/issues"
+Source = "https://github.com/will-wright-eng/cookiewrapper"
 
 [tool.hatch.version]
-path = "src/cookiewrapper/__about__.py"
+path = "cgen/__about__.py"
 
 [tool.hatch.envs.default]
 dependencies = [
@@ -55,7 +60,7 @@ cov = [
 ]
 
 [[tool.hatch.envs.all.matrix]]
-python = ["3.7", "3.8", "3.9", "3.10", "3.11"]
+python = ["3.8", "3.9", "3.10", "3.11"]
 
 [tool.hatch.envs.lint]
 detached = true
@@ -65,7 +70,7 @@ dependencies = [
   "ruff>=0.0.243",
 ]
 [tool.hatch.envs.lint.scripts]
-typing = "mypy --install-types --non-interactive {args:src/cookiewrapper tests}"
+typing = "mypy --install-types --non-interactive {args:cgen tests}"
 style = [
   "ruff {args:.}",
   "black --check --diff {args:.}",
@@ -81,12 +86,12 @@ all = [
 ]
 
 [tool.black]
-target-version = ["py37"]
+target-version = ["py38"]
 line-length = 120
 skip-string-normalization = true
 
 [tool.ruff]
-target-version = "py37"
+target-version = "py38"
 line-length = 120
 select = [
   "A",
@@ -131,7 +136,7 @@ unfixable = [
 ]
 
 [tool.ruff.isort]
-known-first-party = ["cookiewrapper"]
+known-first-party = ["cgen"]
 
 [tool.ruff.flake8-tidy-imports]
 ban-relative-imports = "all"
@@ -139,22 +144,3 @@ ban-relative-imports = "all"
 [tool.ruff.per-file-ignores]
 # Tests can use magic values, assertions, and relative imports
 "tests/**/*" = ["PLR2004", "S101", "TID252"]
-
-[tool.coverage.run]
-source_pkgs = ["cookiewrapper", "tests"]
-branch = true
-parallel = true
-omit = [
-  "src/cookiewrapper/__about__.py",
-]
-
-[tool.coverage.paths]
-cookiewrapper = ["src/cookiewrapper", "*/cookiewrapper/src/cookiewrapper"]
-tests = ["tests", "*/cookiewrapper/tests"]
-
-[tool.coverage.report]
-exclude_lines = [
-  "no cov",
-  "if __name__ == .__main__.:",
-  "if TYPE_CHECKING:",
-]
