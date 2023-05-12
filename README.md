@@ -7,15 +7,22 @@ cli for cookiecutter mgmt and extrapolating instances into templates
 
 -----
 
-**Table of Contents**
+## Summary
 
-- [Installation](#installation)
-- [License](#license)
+TODO: summary
 
 ## Installation
 
-```console
+```bash
 pip install cgen
+```
+
+## Contributing
+
+```bash
+conda create -n dev python=3.11 -y
+conda activate dev
+(dev) python -m pip install -e .
 ```
 
 ## License

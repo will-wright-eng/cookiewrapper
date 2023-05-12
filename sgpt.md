@@ -475,3 +475,129 @@ pytest = "^6.2.4"
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 ```
+
+## Prompt
+
+```bash
+sgpt "give a couple of code example tests for basic functions of a python typer cli app" >> sgpt.md
+```
+
+## Response
+
+Sure, here are a couple of code examples for basic functions of a Python Typer CLI app:
+
+1. A simple CLI app that takes a string input and prints it back out:
+
+```python
+import typer
+
+app = typer.Typer()
+
+@app.command()
+def echo(text: str):
+    typer.echo(text)
+
+if __name__ == "__main__":
+    app()
+```
+
+To test this app, you can run the following command in your terminal:
+
+```
+python app.py echo "Hello, world!"
+```
+
+This should output:
+
+```
+Hello, world!
+```
+
+2. A CLI app that takes two integer inputs and adds them together:
+
+```python
+import typer
+
+app = typer.Typer()
+
+@app.command()
+def add(x: int, y: int):
+    result = x + y
+    typer.echo(result)
+
+if __name__ == "__main__":
+    app()
+```
+
+To test this app, you can run the following command in your terminal:
+
+```
+python app.py add 2 3
+```
+
+This should output:
+
+```
+5
+```
+
+## Prompt
+
+```bash
+sgpt "give a couple of code example tests for basic functions of a python typer cli app. use pytest. create three unit tests that are inherint to the typer package" >> sgpt.md
+```
+
+## Response
+
+Sure, here are a few example tests for basic functions of a Python Typer CLI app using pytest:
+
+1. Test for a basic command that prints a message:
+
+```python
+import typer
+
+def hello(name: str):
+    typer.echo(f"Hello, {name}!")
+
+def test_hello():
+    result = typer.testing.CliRunner().invoke(hello, ["World"])
+    assert result.exit_code == 0
+    assert "Hello, World!" in result.stdout
+```
+
+2. Test for a command that reads input from a file:
+
+```python
+import typer
+
+def count_lines(file_path: str):
+    with open(file_path, "r") as f:
+        lines = f.readlines()
+    typer.echo(f"Number of lines in {file_path}: {len(lines)}")
+
+def test_count_lines(tmp_path):
+    file_path = tmp_path / "test.txt"
+    file_path.write_text("Line 1\nLine 2\nLine 3\n")
+    result = typer.testing.CliRunner().invoke(count_lines, [str(file_path)])
+    assert result.exit_code == 0
+    assert "Number of lines in" in result.stdout
+    assert "3" in result.stdout
+```
+
+3. Test for a command that prompts the user for input:
+
+```python
+import typer
+
+def ask_name():
+    name = typer.prompt("What is your name?")
+    typer.echo(f"Hello, {name}!")
+
+def test_ask_name():
+    result = typer.testing.CliRunner().invoke(ask_name, input="John\n")
+    assert result.exit_code == 0
+    assert "What is your name?" in result.stdout
+    assert "Hello, John!" in result.stdout
+```
+
+These tests cover some basic functionality of the Typer package, including printing messages, reading input from files, and prompting the user for input.
