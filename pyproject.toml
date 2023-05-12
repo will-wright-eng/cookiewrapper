@@ -40,7 +40,7 @@ Issues = "https://github.com/will-wright-eng/cookiewrapper/issues"
 Source = "https://github.com/will-wright-eng/cookiewrapper"
 
 [tool.hatch.version]
-path = "cgen/__about__.py"
+path = "cgen/__init__.py"
 
 [tool.hatch.envs.default]
 dependencies = [
